@@ -2,7 +2,7 @@ package com.example.demo.Exception;
 
 import org.springframework.stereotype.Repository;
 
-@Repository()
+@Repository
 public class ResourceNotFoundException extends RuntimeException{
 
 

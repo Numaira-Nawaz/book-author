@@ -1,5 +1,14 @@
 package com.example.demo.Entities;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 @Table(name = "author")
 public class Author {
@@ -47,13 +56,5 @@ public class Author {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Author{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", no_of_publication=" + noOfPublication+
-                '}';
-    }
+
 }

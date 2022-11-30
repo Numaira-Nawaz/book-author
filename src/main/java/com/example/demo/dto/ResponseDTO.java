@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.Entities.Author;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -9,16 +8,20 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-
 @ToString
 public class ResponseDTO {
-    private Long id;
+    //Book Attributes
     private String title;
-    private List<Author> authors;
+    private int dateOfPublication;
+    private double price;
 
-    public ResponseDTO(Long id, String title, List<Author> authors) {
-        this.id = id;
+    //Author's Attribute
+    private List<AuthorDTO> authors;
+
+    public ResponseDTO(String title, int dateOfPublication,List<AuthorDTO> authors, double price) {
         this.title = title;
+        this.dateOfPublication = dateOfPublication;
         this.authors = authors;
+        this.price = price;
     }
 }

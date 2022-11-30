@@ -1,38 +1,49 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Entities.Author;
 import com.example.demo.Entities.BookEntity;
-import com.example.demo.Repository.AuthorRepo;
-import com.example.demo.Repository.BookRepo;
+import com.example.demo.Services.BookService;
+import com.example.demo.dto.AuthorRequest;
+import com.example.demo.dto.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.awt.print.Book;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 @RestController
 public class BookController {
     @Autowired
-
-    BookRepo bookRepo;
+    BookService bookService;
     @PostMapping(value = "/book")
-    public String insertBook(@RequestBody BookEntity book){
-
-        bookRepo.save(book);
-        return "Book added Successfully!";
+    public String inset(@RequestBody BookEntity book){
+        bookService.insertBook(book);
+        return "Book added Successfully";
     }
-
     @PostMapping("multiplebooks")
-    public String insertMulBooks(@RequestBody List<BookEntity> book){
-        bookRepo.saveAll(book);
-        return book.size()+" books added";
+    public String insertMultiple(@RequestBody List<BookEntity> books){
+        bookService.insertMulBooks(books);
+        return books.size()+ " Books are added";
     }
-    @GetMapping("/searchbyid{price}")
-    public List<BookEntity> SearchBookById(@PathVariable double price){
-        return bookRepo.findByPriceGreaterThanEqual(price);
+    @GetMapping("/searchbyandauthors/{id}")
+    public ResponseDTO searchByID(@PathVariable Long id){
+        return  bookService.getBookAuthor(id);
+
     }
+    @GetMapping("/searchbypricegreaterthanequal{price}")
+    public List<BookEntity> searchByPrice(@PathVariable double price){
+        List<BookEntity> books = bookService.SearchBookByPrice(price);
+        return books;
+    }
+    @PostMapping("/bookauthor")
+    public BookEntity addBook(@RequestBody AuthorRequest book){
+        return bookService.insertBookAndAuthor(book);
+    }
+    @GetMapping("/findAllBookAuthor")
+    public List<BookEntity> findAllBookAuthor(){
+        return bookService.getAllBookAuthor();
+    }
+    @GetMapping("/allauthorbybookid/{id}")
+    ResponseDTO AuthorAndItsBooks(@PathVariable Long id) {
+        return bookService.getBookAuthor(id);
+    }
+
 
     /*public String hello(@RequestParam(value = "title") String title, @RequestParam(value="date_of_publication") int date_of_publication,
                         @RequestParam(value = "price") double price,Author author){

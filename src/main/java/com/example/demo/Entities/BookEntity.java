@@ -1,8 +1,6 @@
 package com.example.demo.Entities;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 @Data
@@ -16,21 +14,19 @@ public class BookEntity {
     private Long id;
     @Column
     private String title;
-    @Column
-    private int date_of_publication;
+    @Column(name = "date_of_publication")
+    private int dateOfPublication;
     @Column
     private double price;
     @OneToMany(targetEntity = Author.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="Book_id",referencedColumnName = "id")
     private List<Author>  authors;
-
-
     @Override
     public String toString() {
         return "BookEntity{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", date_of_publication=" + date_of_publication +
+                ", dateOfPublication=" + dateOfPublication +
                 ", price=" + price +
                 ", authors=" + authors +
                 '}';
