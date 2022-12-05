@@ -1,7 +1,6 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entities.Author;
-import com.example.demo.Entities.BookEntity;
 import com.example.demo.Services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,10 @@ public class AuthorController {
     public Author addAuthor(@RequestBody Author author){
         return authorService.insertAuthor(author);
     }
-
+    @PostMapping("/author/{bid}")
+    public String addAuthor(@RequestBody Author author, @PathVariable Long bid){
+        return authorService.insertAuthorByBkId(author,bid);
+    }
     @GetMapping("/getauthorbynoofpubgreater/{noOfPublication}")
     public List<Author> getAuthorByNoOfPublicationGreaterThanEqual( @PathVariable  Integer noOfPublication){
         return authorService.AuthorByNoOfPublicationGreaterThanEqual(noOfPublication);
@@ -30,7 +32,11 @@ public class AuthorController {
     public Page<Author> getAllAuthorPagination(@PathVariable int pageSize,@PathVariable int pageNumber) {
         return authorService.getAllAuthor(pageSize,pageNumber);
     }
-
+    @DeleteMapping("/deleteAuthor/{id}")
+    public String deleteAuthor(@PathVariable Long id){
+        authorService.delete(id);
+        return "Deleted Successfully";
+    }
     /*@PostMapping(value = "/author")
 
     public String AddAuthor(@RequestParam(value = "name") String name, @RequestParam(value="age") int age,

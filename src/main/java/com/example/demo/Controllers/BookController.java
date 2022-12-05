@@ -13,9 +13,10 @@ public class BookController {
     BookService bookService;
     @PostMapping(value = "/book")
     public String inset(@RequestBody BookEntity book){
-        bookService.insertBook(book);
-        return "Book added Successfully";
+       return bookService.insertBook(book);
+
     }
+
     @PostMapping("multiplebooks")
     public String insertMultiple(@RequestBody List<BookEntity> books){
         bookService.insertMulBooks(books);
@@ -43,8 +44,33 @@ public class BookController {
     ResponseDTO AuthorAndItsBooks(@PathVariable Long id) {
         return bookService.getBookAuthor(id);
     }
-
-
+    @GetMapping("/allbooksname")
+    public List<String> getAllBookTitle(){
+        return bookService.getAllBookName();
+    }
+    @PutMapping("/updatebookname/{id}")
+    public BookEntity updateBookName(@PathVariable Long id,@RequestParam String title){
+        BookEntity book = bookService.findBookById(id);
+        book.setTitle(title);
+        bookService.updateBook(book);
+        return book;
+    }
+    @PutMapping("/updatebooksaleprice/{id}")
+    public BookEntity updateBookSalePrice(@PathVariable Long id,@RequestParam Double salePrice){
+        BookEntity book = bookService.findBookById(id);
+        if (salePrice<= book.getPrice()) {
+            book.setSalePrice(salePrice);
+            bookService.updateBook(book);
+            System.out.println("sale price updated successfully!");
+        }else{
+            System.out.println("sale price must be less than price.");
+        }
+        return book;
+    }
+    @GetMapping("/findbookbyid/{id}")
+    public BookEntity findBook(@PathVariable Long id){
+        return bookService.findBookById(id);
+    }
     /*public String hello(@RequestParam(value = "title") String title, @RequestParam(value="date_of_publication") int date_of_publication,
                         @RequestParam(value = "price") double price,Author author){
 

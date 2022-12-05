@@ -10,7 +10,7 @@ import java.util.List;
 @Table(name ="book")
 public class BookEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column
     private String title;
@@ -18,9 +18,12 @@ public class BookEntity {
     private int dateOfPublication;
     @Column
     private double price;
+    @Column(name = "sale_price")
+    private Double salePrice;
     @OneToMany(targetEntity = Author.class,cascade = CascadeType.ALL)
     @JoinColumn(name ="Book_id",referencedColumnName = "id")
     private List<Author>  authors;
+
     @Override
     public String toString() {
         return "BookEntity{" +
@@ -28,6 +31,7 @@ public class BookEntity {
                 ", title='" + title + '\'' +
                 ", dateOfPublication=" + dateOfPublication +
                 ", price=" + price +
+                ", salePrice=" + salePrice +
                 ", authors=" + authors +
                 '}';
     }
